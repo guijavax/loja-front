@@ -1,8 +1,9 @@
 <template>
   <div id="client">
   <label>Nome &nbsp;</label>
-    <input type="text" ng-model="name">
-    <select>
+    <input type="text" ng-model="name"><br><br>
+    <label>Estado&nbsp;</label>
+    <select @change="getCity">
         <option v-for="state in states" :value="state"> {{state.name_estate}} </option>
     </select>
   </div>
@@ -24,14 +25,20 @@ export default {
       country: '',
       email: '',
       cnpj: '',
-      states: ''
-
+      states: '',
+      url: 'http://localhost:3000',
+      citys: ''
     }
   },
   methods: {
+      getCity(state) {
+          main.SERVICES.get(this.url +'/getCitys', state, response => {
+              console.log(response)
+          })
+      }
   },
   mounted () {
-    main.SERVICES.get('http://localhost:3000/getStates', response => {
+    main.SERVICES.get(this.url + '/getStates',null, response => {
         this.states = response
     })
   }
