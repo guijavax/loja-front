@@ -1,10 +1,14 @@
 <template>
   <div id="client">
   <label>Nome &nbsp;</label>
-    <input type="text" ng-model="name"><br><br>
+    <input type="text" v-model="name"><br><br>
     <label>Estado&nbsp;</label>
-    <select @change="getCity">
+    <select @change="getCity" v-model="state">
         <option v-for="state in states" :value="state"> {{state.name_estate}} </option>
+    </select><br><br>
+    <label>Cidade&nbsp;</label>
+    <select v-model="city">
+        <option v-for="city in citys" :value="state">{{city.nome}}</option>
     </select>
   </div>
 </template>
@@ -31,11 +35,11 @@ export default {
     }
   },
   methods: {
-      getCity(state) {
-          main.SERVICES.get(this.url +'/getCitys', state, response => {
-              console.log(response)
+      getCity() {
+          main.SERVICES.get(this.url +'/getCitys', { parameters: this.state }, response => {
+              this.citys = response
           })
-      }
+      } 
   },
   mounted () {
     main.SERVICES.get(this.url + '/getStates',null, response => {
