@@ -35,11 +35,12 @@ export default {
     }
   },
   methods: {
-      getCity() {
-          main.SERVICES.get(this.url +'/getCitys', { parameters: this.state }, response => {
-              this.citys = response
-          })
-      } 
+    getCity() {
+      console.log(this.state)
+        main.SERVICES.get(this.url +`/getCitys/${this.state.id_estate}`,null, response => {
+            this.citys = response
+        })
+    } 
   },
   mounted () {
     main.SERVICES.get(this.url + '/getStates',null, response => {
